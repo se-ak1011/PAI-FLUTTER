@@ -125,7 +125,7 @@ class ProfileScreen extends ConsumerWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              ReliabilityBadge(score: 4.8), // In real implementation, derive from dynamic review logic
+              ReliabilityBadge(score: 4.8, reviewCount: 24,), // In real implementation, derive from dynamic review logic
               const SizedBox(width: 12),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
