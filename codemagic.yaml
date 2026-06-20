@@ -96,7 +96,12 @@ workflows:
            app-store-connect fetch-signing-files $IOS_BUNDLE_IDENTIFIER --type IOS_APP_STORE --create
            keychain add-certificates
            xcode-project use-profiles
-
+           
+      - name: Install iOS pods
+        script: |
+          cd ios
+          pod install --repo-update
+          
       - name: Build iOS ipa
         script: flutter build ipa --release --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY
     artifacts:
