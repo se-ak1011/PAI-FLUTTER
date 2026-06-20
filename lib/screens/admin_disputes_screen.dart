@@ -233,7 +233,7 @@ class _ReviewsModerationList extends StatelessWidget {
             
             return ListTile(
               isThreeLine: true,
-              leading: ReliabilityBadge(score: (r['rating'] as num).toDouble()),
+              leading: ReliabilityBadge(score: (r['rating'] as num).toDouble(),reviewCount: 0,),
               title: Text('${r['author']['username']} → ${r['subject']['business_name'] ?? r['subject']['username']}'),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
