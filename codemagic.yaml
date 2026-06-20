@@ -62,10 +62,28 @@ workflows:
       - name: Install Flutter dependencies
         script: flutter pub get
 
+      - name: Validate App Store Connect secrets
+        script: |
+          REQUIRED_VARS=(
+            APP_STORE_CONNECT_KEY_IDENTIFIER
+            APP_STORE_CONNECT_ISSUER_ID
+            APP_STORE_CONNECT_PRIVATE_KEY
+          )
+
+          for VAR_NAME in "${REQUIRED_VARS[@]}"; do
+            if [[ -z "${!VAR_NAME:-}" ]]; then
+              echo "Missing required Codemagic secret: $VAR_NAME"
+              echo "Add it in Codemagic UI before running this workflow."
+              exit 1
+            fi
+          done
+
+          echo "App Store Connect secrets detected (values hidden)."
+
       - name: Set up code signing
         script: |
            keychain initialize
-           app-store-connect fetch-signing-files com.paii.app --type IOS_APP_STORE --create
+           app-store-connect fetch-signing-files $IOS_BUNDLE_IDENTIFIER --type IOS_APP_STORE --create
            keychain add-certificates
            xcode-project use-profiles
 
