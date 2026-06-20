@@ -24,7 +24,7 @@ workflows:
           pod install
 
       - name: Build iOS ipa
-        script: flutter build ipa --release
+        script: flutter build ipa --release --export-options-plist=/Users/builder/export_options.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/iphoneos/Runner.app.dSYM.zip
