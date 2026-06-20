@@ -64,8 +64,16 @@ workflows:
 
       - name: Validate App Store Connect secrets
         script: |
+          # Support either APP_STORE_CONNECT_KEY_IDENTIFIER or APP_STORE_CONNECT_KEY_ID.
+          APP_STORE_CONNECT_KEY_IDENTIFIER="${APP_STORE_CONNECT_KEY_IDENTIFIER:-${APP_STORE_CONNECT_KEY_ID:-}}"
+
+          if [[ -z "$APP_STORE_CONNECT_KEY_IDENTIFIER" ]]; then
+            echo "Missing required Codemagic secret: APP_STORE_CONNECT_KEY_IDENTIFIER (or APP_STORE_CONNECT_KEY_ID)"
+            echo "Add it in Codemagic UI before running this workflow."
+            exit 1
+          fi
+
           REQUIRED_VARS=(
-            APP_STORE_CONNECT_KEY_IDENTIFIER
             APP_STORE_CONNECT_ISSUER_ID
             APP_STORE_CONNECT_PRIVATE_KEY
             OPENAI_API_KEY
@@ -83,6 +91,7 @@ workflows:
 
       - name: Set up code signing
         script: |
+           export APP_STORE_CONNECT_KEY_IDENTIFIER="${APP_STORE_CONNECT_KEY_IDENTIFIER:-${APP_STORE_CONNECT_KEY_ID:-}}"
            keychain initialize
            app-store-connect fetch-signing-files $IOS_BUNDLE_IDENTIFIER --type IOS_APP_STORE --create
            keychain add-certificates
