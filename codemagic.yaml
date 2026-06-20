@@ -103,7 +103,7 @@ workflows:
           pod install --repo-update
           
       - name: Build iOS ipa
-        script: flutter build ipa --release --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY
+        script: flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/iphoneos/Runner.app.dSYM.zip
