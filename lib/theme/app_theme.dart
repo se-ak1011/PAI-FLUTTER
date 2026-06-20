@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   // Brand Colors based on a professional "Trade/Construction" palette
   // Navy and Slate for trust, Safety Orange for accents/actions.
-  static const Color primaryNavy = Color(0 backyard-1C252E); // Adjusted for clarity
+  static const Color primaryNavy = Color(0xFF1C252E); // Adjusted for clarity
   static const Color brandPrimary = Color(0xFF1E3A8A);
   static const Color brandSecondary = Color(0xFFF97316); 
   static const Color brandSuccess = Color(0xFF10B981);
