@@ -5,7 +5,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import '../models/app_models.dart';
 import '../providers/auth_providers.dart';
-import '../providers/data_providers.dart';
 import '../theme/app_theme.dart';
 import '../widgets/common_widgets.dart';
 
@@ -72,7 +71,7 @@ class ProfileScreen extends ConsumerWidget {
       children: [
         CircleAvatar(
           radius: 40,
-          backgroundColor: AppTheme.primaryNavy.withOpacity(0.1),
+          backgroundColor: AppTheme.primaryNavy.withValues(alpha: 0.1),
           child: Text(
             (profile.businessName ?? profile.username ?? 'P')[0].toUpperCase(),
             style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: AppTheme.primaryNavy),
@@ -95,7 +94,7 @@ class ProfileScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppTheme.brandPrimary.withOpacity(0.1),
+                  color: AppTheme.brandPrimary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
@@ -125,7 +124,7 @@ class ProfileScreen extends ConsumerWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              ReliabilityBadge(score: 4.8, reviewCount: 24,), // In real implementation, derive from dynamic review logic
+              ReliabilityBadge(score: 4.8, reviewCount: 24), // In real implementation, derive from dynamic review logic
               const SizedBox(width: 12),
               const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/app_models.dart';
-import '../services/supabase_service.dart';
 import 'auth_providers.dart';
 
 /// Provides a stream of all open job posts from the marketplace.

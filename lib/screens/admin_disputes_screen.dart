@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../models/app_models.dart';
-import '../providers/auth_providers.dart';
 import '../theme/app_theme.dart';
 import '../widgets/common_widgets.dart';
 
@@ -233,7 +231,7 @@ class _ReviewsModerationList extends StatelessWidget {
             
             return ListTile(
               isThreeLine: true,
-              leading: ReliabilityBadge(score: (r['rating'] as num).toDouble(),reviewCount: 0,),
+              leading: ReliabilityBadge(score: (r['rating'] as num).toDouble(), reviewCount: 0),
               title: Text('${r['author']['username']} → ${r['subject']['business_name'] ?? r['subject']['username']}'),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

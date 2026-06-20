@@ -111,7 +111,7 @@ class JobCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                      color: AppTheme.brandPrimary.withOpacity(0.1),
+                      color: AppTheme.brandPrimary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
@@ -160,9 +160,9 @@ class ReliabilityBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: _getScoreColor(score).withOpacity(0.1),
+        color: _getScoreColor(score).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _getScoreColor(score).withOpacity(0.3)),
+        border: Border.all(color: _getScoreColor(score).withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -180,7 +180,7 @@ class ReliabilityBadge extends StatelessWidget {
             ' ($reviewCount)',
             style: TextStyle(
               fontSize: 12,
-              color: _getScoreColor(score).withOpacity(0.8),
+              color: _getScoreColor(score).withValues(alpha: 0.8),
             ),
           ),
         ],
@@ -256,7 +256,7 @@ class _RoleButton extends StatelessWidget {
             boxShadow: isActive
                 ? [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 4,
                       offset: const Offset(0, 2),
                     )
@@ -304,7 +304,7 @@ class _StatusBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(

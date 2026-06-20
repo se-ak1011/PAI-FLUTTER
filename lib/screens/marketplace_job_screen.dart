@@ -7,7 +7,6 @@ import '../providers/auth_providers.dart';
 import '../providers/data_providers.dart';
 import '../services/openai_service.dart';
 import '../theme/app_theme.dart';
-import '../widgets/common_widgets.dart';
 
 class MarketplaceJobScreen extends ConsumerStatefulWidget {
   final String jobId;
@@ -129,7 +128,7 @@ class _MarketplaceJobScreenState extends ConsumerState<MarketplaceJobScreen> {
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(userProfileProvider).value;
-    final jobAsync = ref.watch(jobPostProvider(widget.jobId));
+    final jobAsync = ref.watch(jobPostDetailProvider(widget.jobId));
     final appsAsync = ref.watch(jobApplicationsProvider(widget.jobId));
 
     if (profile == null) return const Scaffold(body: Center(child: CircularProgressIndicator()));
@@ -140,8 +139,6 @@ class _MarketplaceJobScreenState extends ConsumerState<MarketplaceJobScreen> {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, _) => Center(child: Text('Error: $e')),
         data: (job) {
-          if (job == null) return const Center(child: Text('Job not found'));
-
           final isOwner = job.clientId == profile.id;
 
           return SingleChildScrollView(
@@ -176,7 +173,7 @@ class _MarketplaceJobScreenState extends ConsumerState<MarketplaceJobScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppTheme.brandPrimary.withOpacity(0.1),
+                color: AppTheme.brandPrimary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import '../services/supabase_service.dart';
 import '../providers/auth_providers.dart';
 import '../models/app_models.dart';
 import '../theme/app_theme.dart';
 
-class AuthScreen extends consumerStatefulWidget {
+class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
 
   @override

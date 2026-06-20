@@ -24,7 +24,7 @@ class AppTheme {
         onSecondary: Colors.white,
       ),
       scaffoldBackgroundColor: surfaceLight,
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: cardColor,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -127,7 +127,7 @@ class AppTheme {
       ),
       chipTheme: ChipThemeData(
         backgroundColor: Colors.grey.shade100,
-        selectedColor: brandPrimary.withOpacity(0.1),
+        selectedColor: brandPrimary.withValues(alpha: 0.1),
         secondarySelectedColor: brandPrimary,
         labelStyle: const TextStyle(fontSize: 13, color: Color(0xFF334155)),
         secondaryLabelStyle: const TextStyle(color: brandPrimary),
@@ -150,13 +150,24 @@ class AppTheme {
     );
   }
 
+  static ThemeData get darkTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.dark,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: brandPrimary,
+        brightness: Brightness.dark,
+      ),
+    );
+  }
+
   // Helper for applying role-based colors (Contractor vs Customer)
   static Color getRoleColor(String role) {
     switch (role.toLowerCase()) {
       case 'contractor':
         return brandPrimary;
       case 'customer':
-        return const Color(0 backyard-0284C7); // Sky Blue for Customers
+        return const Color(0xFF0284C7);
       default:
         return brandSecondary;
     }

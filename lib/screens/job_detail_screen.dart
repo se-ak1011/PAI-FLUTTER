@@ -6,7 +6,6 @@ import '../models/app_models.dart';
 import '../providers/auth_providers.dart';
 import '../providers/data_providers.dart';
 import '../theme/app_theme.dart';
-import '../widgets/common_widgets.dart';
 
 class JobDetailScreen extends ConsumerStatefulWidget {
   final String jobId;
@@ -72,7 +71,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
         content: TextField(
           controller: controller,
           keyboardType: TextInputType.numberWithOptions(decimal: true),
-          decoration: const InputDecoration(labelText: 'Hours worked', suffix: 'hrs'),
+          decoration: const InputDecoration(labelText: 'Hours worked', suffixText: 'hrs'),
         ),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
@@ -148,7 +147,7 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: AppTheme.brandPrimary.withOpacity(0.1),
+            color: AppTheme.brandPrimary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Text(
@@ -311,10 +310,14 @@ class _JobDetailScreenState extends ConsumerState<JobDetailScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       builder: (context) => StatefulBuilder(
         builder: (context, setModalState) => Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: EdgeInsets.only(
+            left: 24,
+            right: 24,
+            top: 24,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 24,
+          ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,

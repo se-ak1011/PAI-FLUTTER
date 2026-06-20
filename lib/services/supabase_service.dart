@@ -1,6 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/app_models.dart';
-import '../config/env.dart';
 
 class SupabaseService {
   final SupabaseClient _client = Supabase.instance.client;
@@ -93,6 +94,17 @@ class SupabaseService {
 
   Future<void> createJobPost(JobPost job) async {
     await _client.from('job_posts').insert(job.toJson());
+  }
+
+  Future<List<UserProfile>> getContractors() async {
+    final data = await _client
+        .from('user_profiles')
+        .select()
+        .or('account_type.eq.contractor,account_type.eq.both')
+        .order('id', ascending: false);
+    return (data as List)
+        .map((json) => UserProfile.fromJson(Map<String, dynamic>.from(json)))
+        .toList();
   }
 
   // --- Job Applications ---

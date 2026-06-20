@@ -12,7 +12,7 @@ Future<void> main() async {
   // Initialize Supabase with constants from server-emitted Env
   await Supabase.initialize(
     url: Env.supabaseUrl,
-    anonKey: Env.supabaseAnonKey,
+    publishableKey: Env.supabaseAnonKey,
   );
 
   // Lock orientation to portrait for a consistent mobile experience

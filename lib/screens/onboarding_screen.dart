@@ -159,7 +159,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                               }
                             });
                           },
-                          selectedColor: AppTheme.brandPrimary.withOpacity(0.2),
+                          selectedColor: AppTheme.brandPrimary.withValues(alpha: 0.2),
                           checkmarkColor: AppTheme.brandPrimary,
                         );
                       }).toList(),
@@ -171,7 +171,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     ),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<double>(
-                      value: _taxRate,
+                      initialValue: _taxRate,
                       decoration: const InputDecoration(
                         labelText: 'Tax Status',
                         prefixIcon: Icon(Icons.pie_chart),
@@ -224,6 +224,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       },
       loading: () => const Scaffold(body: Center(child: CircularProgressIndicator())),
       error: (e, _) => Scaffold(body: Center(child: Text('Error: $e'))),
+      orElse: () => const Scaffold(body: Center(child: CircularProgressIndicator())),
     );
   }
 }

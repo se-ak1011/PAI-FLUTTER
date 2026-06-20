@@ -5,7 +5,6 @@ import '../models/app_models.dart';
 import '../providers/auth_providers.dart';
 import '../providers/data_providers.dart';
 import '../theme/app_theme.dart';
-import '../widgets/common_widgets.dart';
 
 class MarketplaceScreen extends ConsumerStatefulWidget {
   const MarketplaceScreen({super.key});
@@ -17,18 +16,6 @@ class MarketplaceScreen extends ConsumerStatefulWidget {
 class _MarketplaceScreenState extends ConsumerState<MarketplaceScreen> {
   String? _selectedTrade;
   final TextEditingController _searchController = TextEditingController();
-
-  final List<String> _tradeOptions = [
-    'Plumbing',
-    'Electrician',
-    'Carpentry',
-    'Painting',
-    'Bricklaying',
-    'Roofing',
-    'Plastering',
-    'Landscaping',
-    'General Labor'
-  ];
 
   @override
   void dispose() {
@@ -189,7 +176,7 @@ class _PublicJobsView extends ConsumerWidget {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                   decoration: BoxDecoration(
-                                    color: AppTheme.brandPrimary.withOpacity(0.1),
+                                    color: AppTheme.brandPrimary.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(4),
                                   ),
                                   child: Text(
@@ -273,7 +260,7 @@ class _TradeNetworkView extends ConsumerWidget {
           return const Center(child: CircularProgressIndicator());
         }
         
-        final contractors = snapshot.data as List<UserProfile>? ?? [];
+        final contractors = snapshot.data ?? [];
 
         if (contractors.isEmpty) {
           return const Center(child: Text("No contractors in the network yet."));
@@ -287,7 +274,7 @@ class _TradeNetworkView extends ConsumerWidget {
             return ListTile(
               contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               leading: CircleAvatar(
-                backgroundColor: AppTheme.brandPrimary.withOpacity(0.1),
+                backgroundColor: AppTheme.brandPrimary.withValues(alpha: 0.1),
                 child: Text(contractor.businessName?.substring(0, 1) ?? "P"),
               ),
               title: Text(contractor.businessName ?? "Independent Trader"),

@@ -72,7 +72,7 @@ class _TaxPotScreenState extends ConsumerState<TaxPotScreen> {
 
           // Calculate Paid PAI Jobs
           final paiEarnings = privateJobs
-              .Where((j) => j.status == 'paid')
+              .where((j) => j.status == 'paid')
               .fold(0.0, (sum, item) => sum + item.total);
 
           // Calculate Manual Income
@@ -176,7 +176,9 @@ class _TaxPotScreenState extends ConsumerState<TaxPotScreen> {
                   child: ChoiceChip(
                     label: const Center(child: Text('CIS (20%)')),
                     selected: currentRate == 20.0,
-                    onSelected: (val) if (val) _updateTaxRate(20.0),
+                    onSelected: (val) {
+                      if (val) _updateTaxRate(20.0);
+                    },
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -184,7 +186,9 @@ class _TaxPotScreenState extends ConsumerState<TaxPotScreen> {
                   child: ChoiceChip(
                     label: const Center(child: Text('General (30%)')),
                     selected: currentRate == 30.0,
-                    onSelected: (val) if (val) _updateTaxRate(30.0),
+                    onSelected: (val) {
+                      if (val) _updateTaxRate(30.0);
+                    },
                   ),
                 ),
               ],

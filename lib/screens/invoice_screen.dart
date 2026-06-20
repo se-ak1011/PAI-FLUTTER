@@ -79,7 +79,12 @@ TOTAL DUE: £${job.total.toStringAsFixed(2)}
 
 Generated via PAI Platform
 ''';
-    Share.share(text, subject: 'Invoice for ${job.title}');
+    SharePlus.instance.share(
+      ShareParams(
+        text: text,
+        subject: 'Invoice for ${job.title}',
+      ),
+    );
   }
 }
 
@@ -227,7 +232,7 @@ class _StatusBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color),
       ),

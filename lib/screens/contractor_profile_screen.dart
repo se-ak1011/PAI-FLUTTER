@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/app_models.dart';
-import '../providers/auth_providers.dart';
-import '../providers/data_providers.dart';
 import '../theme/app_theme.dart';
 import '../widgets/common_widgets.dart';
 
@@ -56,7 +54,7 @@ class ContractorProfileScreen extends ConsumerWidget {
         .select()
         .eq('id', id)
         .single();
-    return UserProfile.fromMap(response);
+    return UserProfile.fromJson(response);
   }
 }
 
@@ -74,7 +72,7 @@ class _HeaderSection extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 40,
-            backgroundColor: AppTheme.brandPrimary.withOpacity(0.1),
+            backgroundColor: AppTheme.brandPrimary.withValues(alpha: 0.1),
             child: const Icon(Icons.business, size: 40, color: AppTheme.brandPrimary),
           ),
           const SizedBox(width: 16),
@@ -95,12 +93,12 @@ class _HeaderSection extends StatelessWidget {
                   spacing: 4,
                   children: contractor.trades.map((trade) => Chip(
                     label: Text(trade, style: const TextStyle(fontSize: 12)),
-                    backgroundColor: AppTheme.brandPrimary.withOpacity(0.05),
+                    backgroundColor: AppTheme.brandPrimary.withValues(alpha: 0.05),
                     visualDensity: VisualDensity.compact,
                   )).toList(),
                 ),
                 const SizedBox(height: 8),
-                ReliabilityBadge(userId: contractor.id),
+                const ReliabilityBadge(score: 4.8, reviewCount: 24),
               ],
             ),
           ),

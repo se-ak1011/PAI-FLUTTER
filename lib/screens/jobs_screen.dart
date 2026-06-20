@@ -6,7 +6,6 @@ import '../models/app_models.dart';
 import '../providers/auth_providers.dart';
 import '../providers/data_providers.dart';
 import '../theme/app_theme.dart';
-import '../widgets/common_widgets.dart';
 
 class JobsScreen extends ConsumerStatefulWidget {
   const JobsScreen({super.key});
@@ -17,7 +16,6 @@ class JobsScreen extends ConsumerStatefulWidget {
 
 class _JobsScreenState extends ConsumerState<JobsScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final _supabase = Supabase.instance.client;
 
   @override
   void initState() {
