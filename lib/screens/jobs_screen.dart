@@ -213,6 +213,7 @@ class _CreatePrivateJobSheetState extends State<_CreatePrivateJobSheet> {
       });
       if (mounted) Navigator.pop(context);
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -278,6 +279,7 @@ class _PostJobSheetState extends State<_PostJobSheet> {
       });
       if (mounted) Navigator.pop(context);
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString())));
     } finally {
       if (mounted) setState(() => _isLoading = false);

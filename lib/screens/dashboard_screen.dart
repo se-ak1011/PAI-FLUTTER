@@ -102,7 +102,7 @@ class _ContractorDashboard extends ConsumerWidget {
                         .toList(),
                   ),
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (_, __) => const Text('Error loading jobs'),
+            error: (_, _) => const Text('Error loading jobs'),
           ),
           const SizedBox(height: 24),
           _SubscriptionStatusCard(status: profile.subscriptionStatus),
@@ -203,7 +203,7 @@ class _CustomerDashboard extends ConsumerWidget {
                     );
             },
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (_, __) => const Text('Error loading postings'),
+            error: (_, _) => const Text('Error loading postings'),
           ),
         ],
       ),

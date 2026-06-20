@@ -132,7 +132,7 @@ final routerProvider = Provider<GoRouter>((ref) {
 /// Notifier that triggers GoRouter refresh on auth or profile state changes.
 class _AuthRefreshNotifier extends ChangeNotifier {
   _AuthRefreshNotifier(Ref ref) {
-    ref.listen(authStateProvider, (_, __) => notifyListeners());
-    ref.listen(userProfileProvider, (_, __) => notifyListeners());
+    ref.listen(authStateProvider, (_, _) => notifyListeners());
+    ref.listen(userProfileProvider, (_, _) => notifyListeners());
   }
 }

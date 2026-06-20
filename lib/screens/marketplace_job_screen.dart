@@ -55,6 +55,7 @@ class _MarketplaceJobScreenState extends ConsumerState<MarketplaceJobScreen> {
       }
       _messageController.text = response;
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('AI Error: $e')),
       );
@@ -82,6 +83,7 @@ class _MarketplaceJobScreenState extends ConsumerState<MarketplaceJobScreen> {
         context.pop();
       }
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Submission failed: $e')),
       );
@@ -115,10 +117,10 @@ class _MarketplaceJobScreenState extends ConsumerState<MarketplaceJobScreen> {
         'source_job_post_id': job.id,
       });
 
-      if (mounted) {
-        context.go('/jobs');
-      }
+      if (!mounted) return;
+      context.go('/jobs');
     } catch (e) {
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to accept: $e')),
       );
@@ -213,7 +215,7 @@ class _MarketplaceJobScreenState extends ConsumerState<MarketplaceJobScreen> {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: apps.length,
-              separatorBuilder: (_, __) => const SizedBox(height: 12),
+              separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
                 final app = apps[index];
                 return Card(
