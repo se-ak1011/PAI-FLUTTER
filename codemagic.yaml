@@ -68,6 +68,7 @@ workflows:
             APP_STORE_CONNECT_KEY_IDENTIFIER
             APP_STORE_CONNECT_ISSUER_ID
             APP_STORE_CONNECT_PRIVATE_KEY
+            OPENAI_API_KEY
           )
 
           for VAR_NAME in "${REQUIRED_VARS[@]}"; do
@@ -101,7 +102,7 @@ workflows:
           ! grep -q 'Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig' ios/Flutter/Release.xcconfig
 
       - name: Build iOS ipa
-        script: flutter build ipa --release
+        script: flutter build ipa --release --dart-define=OPENAI_API_KEY=$OPENAI_API_KEY
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/iphoneos/Runner.app.dSYM.zip
