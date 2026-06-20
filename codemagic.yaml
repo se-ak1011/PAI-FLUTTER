@@ -13,15 +13,25 @@ workflows:
     cache:
       cache_paths:
         - $HOME/.pub-cache
-        - $HOME/Library/Caches/CocoaPods
     scripts:
+      - name: Enable Swift Package Manager for Flutter iOS plugins
+        script: flutter config --enable-swift-package-manager
+
       - name: Install Flutter dependencies
         script: flutter pub get
 
-      - name: Install iOS pods
+      - name: Remove CocoaPods artifacts if present
         script: |
           cd ios
-          pod install
+          if command -v pod >/dev/null 2>&1; then
+            pod deintegrate || true
+          fi
+          rm -rf Pods Podfile.lock
+
+      - name: Validate xcconfig no longer includes Pods
+        script: |
+          ! grep -q 'Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig' ios/Flutter/Debug.xcconfig
+          ! grep -q 'Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig' ios/Flutter/Release.xcconfig
 
       - name: Build iOS ipa
         script: flutter build ipa --release
