@@ -1,0 +1,28 @@
+workflows:
+  ios-release:
+    name: iOS Release
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+    cache:
+      cache_paths:
+        - $HOME/.pub-cache
+        - $HOME/Library/Caches/CocoaPods
+    scripts:
+      - name: Install Flutter dependencies
+        script: flutter pub get
+
+      - name: Install iOS pods
+        script: |
+          cd ios
+          pod install
+
+      - name: Build iOS app
+        script: flutter build ios --release --no-codesign
+    artifacts:
+      - build/ios/iphoneos/Runner.app
+      - build/ios/iphoneos/Runner.app.dSYM.zip
+      - /tmp/xcodebuild_logs/*.log
