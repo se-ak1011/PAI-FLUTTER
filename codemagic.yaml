@@ -55,10 +55,6 @@ workflows:
             exit 1
           fi
 
-      - name: Apply fetched provisioning profiles to Xcode project
-        script: xcode-project use-profiles
-
-    
       - name: Install Flutter dependencies
         script: flutter pub get
 
