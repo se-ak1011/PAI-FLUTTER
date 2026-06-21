@@ -23,7 +23,7 @@ workflows:
           echo "== Code signing identities (name + SHA-1) =="
           security find-identity -v -p codesigning || true
 
-          echo ""
+          echo
           echo "== Provisioning profiles available =="
           PROFILE_DIR="$HOME/Library/MobileDevice/Provisioning Profiles"
           if [[ -d "$PROFILE_DIR" ]]; then
