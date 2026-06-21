@@ -62,7 +62,7 @@ workflows:
       - name: Install Flutter dependencies
         script: flutter pub get
 
-     -name: Validate App Store Connect secrets
+     - name: Validate App Store Connect secrets
         script: |
           export APP_STORE_CONNECT_KEY_IDENTIFIER="${APP_STORE_CONNECT_KEY_IDENTIFIER:-${APP_STORE_CONNECT_KEY_ID:-}}"
 
