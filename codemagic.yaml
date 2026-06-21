@@ -28,7 +28,7 @@ workflows:
           PROFILE_DIR="$HOME/Library/MobileDevice/Provisioning Profiles"
           if [[ -d "$PROFILE_DIR" ]]; then
             find "$PROFILE_DIR" -name "*.mobileprovision" -maxdepth 1 | while read -r profile; do
-              echo ""
+              echo
               echo "Profile file: $(basename "$profile")"
               security cms -D -i "$profile" > /tmp/codemagic_profile.plist
               /usr/libexec/PlistBuddy -c "Print :Name" /tmp/codemagic_profile.plist || true
