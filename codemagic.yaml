@@ -60,7 +60,6 @@ workflows:
 
       - name: Validate App Store Connect secrets
         script: |
-          set -eo pipefail
           export APP_STORE_CONNECT_KEY_IDENTIFIER="${APP_STORE_CONNECT_KEY_IDENTIFIER:-${APP_STORE_CONNECT_KEY_ID:-}}"
 
           REQUIRED_VARS=(
@@ -72,56 +71,28 @@ workflows:
 
           for VAR_NAME in "${REQUIRED_VARS[@]}"; do
             if [[ -z "${!VAR_NAME:-}" ]]; then
-              echo "ERROR: Missing required Codemagic secret: $VAR_NAME"
+              echo "Missing required Codemagic secret: $VAR_NAME"
               exit 1
             fi
           done
 
-          echo "All required App Store Connect secrets are present."
+          echo "App Store Connect secrets detected."
 
       - name: Set up code signing
         script: |
-          set -eo pipefail
           export APP_STORE_CONNECT_KEY_IDENTIFIER="${APP_STORE_CONNECT_KEY_IDENTIFIER:-${APP_STORE_CONNECT_KEY_ID:-}}"
           keychain initialize
           app-store-connect fetch-signing-files "$IOS_BUNDLE_IDENTIFIER" --type IOS_APP_STORE --create
           keychain add-certificates
           xcode-project use-profiles
 
-      - name: Verify code signing setup
-        script: |
-          echo "== CM_EXPORT_OPTIONS_PLIST value =="
-          echo "${CM_EXPORT_OPTIONS_PLIST:-<empty – xcode-project use-profiles did not set it>}"
-
-          if [[ -n "$CM_EXPORT_OPTIONS_PLIST" && -f "$CM_EXPORT_OPTIONS_PLIST" ]]; then
-            echo ""
-            echo "== ExportOptions.plist contents =="
-            cat "$CM_EXPORT_OPTIONS_PLIST"
-          else
-            echo "WARNING: CM_EXPORT_OPTIONS_PLIST is empty or the file does not exist."
-            echo "The 'Set up code signing' step likely failed. Check the logs above."
-          fi
-
-          echo ""
-          echo "== Active code signing identities =="
-          security find-identity -v -p codesigning || true
-
       - name: Install iOS pods
         script: |
-          set -eo pipefail
           cd ios
           pod install --repo-update
 
       - name: Build iOS ipa
-        script: |
-          set -eo pipefail
-          if [[ -z "$CM_EXPORT_OPTIONS_PLIST" ]]; then
-            echo "ERROR: CM_EXPORT_OPTIONS_PLIST is not set."
-            echo "This means 'xcode-project use-profiles' did not complete successfully."
-            echo "Check the 'Set up code signing' step for errors."
-            exit 1
-          fi
-          flutter build ipa --release --export-options-plist="$CM_EXPORT_OPTIONS_PLIST"
+        script: flutter build ipa --release --export-options-plist="$CM_EXPORT_OPTIONS_PLIST"
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/iphoneos/Runner.app.dSYM.zip
