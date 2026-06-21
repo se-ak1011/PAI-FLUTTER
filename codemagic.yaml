@@ -13,7 +13,7 @@ workflows:
         IOS_BUNDLE_IDENTIFIER: com.paii.app
       ios_signing:
          distribution_type: app_store
-         bundle_identifier: $IOS_BUNDLE_IDENTIFIER
+         bundle_identifier: com.paii.app
     cache:
       cache_paths:
         - $HOME/.pub-cache
