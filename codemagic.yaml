@@ -62,48 +62,41 @@ workflows:
       - name: Install Flutter dependencies
         script: flutter pub get
 
-      - name: Validate App Store Connect secrets
+     -name: Validate App Store Connect secrets
         script: |
-          # Support either APP_STORE_CONNECT_KEY_IDENTIFIER or APP_STORE_CONNECT_KEY_ID.
-          APP_STORE_CONNECT_KEY_IDENTIFIER="${APP_STORE_CONNECT_KEY_IDENTIFIER:-${APP_STORE_CONNECT_KEY_ID:-}}"
+          export APP_STORE_CONNECT_KEY_IDENTIFIER="${APP_STORE_CONNECT_KEY_IDENTIFIER:-${APP_STORE_CONNECT_KEY_ID:-}}"
 
-          if [[ -z "$APP_STORE_CONNECT_KEY_IDENTIFIER" ]]; then
-            echo "Missing required Codemagic secret: APP_STORE_CONNECT_KEY_IDENTIFIER (or APP_STORE_CONNECT_KEY_ID)"
-            echo "Add it in Codemagic UI before running this workflow."
+         REQUIRED_VARS=(
+          APP_STORE_CONNECT_KEY_IDENTIFIER
+          APP_STORE_CONNECT_ISSUER_ID
+          APP_STORE_CONNECT_PRIVATE_KEY
+          IOS_BUNDLE_IDENTIFIER
+         )
+
+         for VAR_NAME in "${REQUIRED_VARS[@]}"; do
+          if [[ -z "${!VAR_NAME:-}" ]]; then
+            echo "Missing required Codemagic secret: $VAR_NAME"
             exit 1
           fi
+         done
 
-          REQUIRED_VARS=(
-            APP_STORE_CONNECT_ISSUER_ID
-            APP_STORE_CONNECT_PRIVATE_KEY
-            OPENAI_API_KEY
-          )
+         echo "App Store Connect secrets detected."
 
-          for VAR_NAME in "${REQUIRED_VARS[@]}"; do
-            if [[ -z "${!VAR_NAME:-}" ]]; then
-              echo "Missing required Codemagic secret: $VAR_NAME"
-              echo "Add it in Codemagic UI before running this workflow."
-              exit 1
-            fi
-          done
+    - name: Set up code signing
+      script: |
+        export APP_STORE_CONNECT_KEY_IDENTIFIER="${APP_STORE_CONNECT_KEY_IDENTIFIER:-${APP_STORE_CONNECT_KEY_ID:-}}"
+        keychain initialize
+        app-store-connect fetch-signing-files "$IOS_BUNDLE_IDENTIFIER" --type IOS_APP_STORE --create
+        keychain add-certificates
+        xcode-project use-profiles
 
-          echo "App Store Connect secrets detected (values hidden)."
+    - name: Install iOS pods
+      script: |
+        cd ios
+        pod install --repo-update
 
-      - name: Set up code signing
-        script: |
-           export APP_STORE_CONNECT_KEY_IDENTIFIER="${APP_STORE_CONNECT_KEY_IDENTIFIER:-${APP_STORE_CONNECT_KEY_ID:-}}"
-           keychain initialize
-           app-store-connect fetch-signing-files $IOS_BUNDLE_IDENTIFIER --type IOS_APP_STORE --create
-           keychain add-certificates
-           xcode-project use-profiles
-           
-      - name: Install iOS pods
-        script: |
-          cd ios
-          pod install --repo-update
-          
-      - name: Build iOS ipa
-        script: flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+    - name: Build iOS ipa
+      script: flutter build ipa --release --export-options-plist="$CM_EXPORT_OPTIONS_PLIST"
     artifacts:
       - build/ios/ipa/*.ipa
       - build/ios/iphoneos/Runner.app.dSYM.zip
